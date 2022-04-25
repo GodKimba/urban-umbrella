@@ -90,37 +90,3 @@ elif user_response == "subject":
                 print("Deleting", subject)
         # Marking the mail as deleted
         imap.store(mail, "+FLAGS", "\\Deleted")
-
-
-# if user_response == "subject":
-#     # Loop to iterate over targeted mails and mark them as deleted
-#     for mail in messages:
-#         _, msg = imap.fetch(mail, "(RFC822)")
-#         # This second loop is only for printing the SUBJECT of targeted mails
-#         for response in msg:
-#             if isinstance(response, tuple):
-#                 msg = email.message_from_bytes(response[1])
-#                 # Decoding the mail subject
-#                 subject = decode_header(msg["Subject"])[0][0]
-#                 if isinstance(subject, bytes):
-#                     # If it is a bytes type, decode to str
-#                     subject = subject.decode()
-#                 print("Deleting", subject)
-#         # Marking the mail as deleted
-#         imap.store(mail, "+FLAGS", "\\Deleted")
-# elif user_response == "sender":
-#     # Loop to iterate over targeted mails and mark them as deleted
-#     for mail in messages:
-#         _, msg = imap.fetch(mail, "(RFC822)")
-#         # This second loop is only for printing the SUBJECT of targeted mails
-#         for response in msg:
-#             if isinstance(response, tuple):
-#                 msg = email.message_from_bytes(response[1])
-#                 # Decoding the mail subject
-#                 subject = decode_header(msg["Subject"])[0][0]
-#                 if isinstance(subject, bytes):
-#                     # If it is a bytes type, decode to str
-#                     subject = subject.decode()
-#                 print("Deleting", subject)
-#         # Marking the mail as deleted
-#         imap.store(mail, "+FLAGS", "\\Deleted")
