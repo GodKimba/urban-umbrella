@@ -90,3 +90,5 @@ elif user_response == "subject":
                 print("Deleting", subject)
         # Marking the mail as deleted
         imap.store(mail, "+FLAGS", "\\Deleted")
+
+# testing
