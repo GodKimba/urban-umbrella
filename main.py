@@ -19,13 +19,7 @@ imap.login(username, password)
 imap.select("inbox")
 
 
-user_response = (
-    input("Do you wish to search by subject or by sender? (type: subject or sender) ")
-    .lower()
-    .strip()
-)
-
-if user_response == "sender":
+def delete_by_sender():
     sender = input("Enter the sender mail address: ").lower().strip()
     status, messages = imap.search(None, f"FROM {sender}")
     messages = messages[0].split(b" ")
@@ -45,8 +39,7 @@ if user_response == "sender":
         # Marking the mail as deleted
         imap.store(mail, "+FLAGS", "\\Deleted")
 
-
-elif user_response == "subject":
+def delete_by_subject():
     subject = input("Enter the subject key-words: ").lower().strip()
     status, messages = imap.search(None, f"SUBJECT {subject}")
     messages = messages[0].split(b" ")
@@ -66,6 +59,23 @@ elif user_response == "subject":
         # Marking the mail as deleted
         imap.store(mail, "+FLAGS", "\\Deleted")
 
+
+
+user_response = (
+    input("Do you wish to search by subject or by sender? (type: subject or sender) ")
+    .lower()
+    .strip()
+)
+
+
+
+if user_response == "sender":
+    delete_by_sender()
+
+
+elif user_response == "subject":
+    delete_by_subject()
+
 # Else statement to prevent error in caso neither of the other two statemets are true (should i use try and except?)
 else: 
     imap.close()
@@ -74,3 +84,6 @@ else:
 imap.expunge()
 imap.close()
 imap.logout()
+
+
+# Try to pass an argument as the sender or subject variable to clean code up
