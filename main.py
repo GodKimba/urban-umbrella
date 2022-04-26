@@ -1,7 +1,9 @@
 import imaplib
 import email
 from email.header import decode_header
+from typing import Type
 from decouple import config
+import sys
 
 # Account Credentials
 username = config("USERNAME")
@@ -59,32 +61,45 @@ def delete_by_subject():
         # Marking the mail as deleted
         imap.store(mail, "+FLAGS", "\\Deleted")
 
+def main():
+    user_response = (
+        input("Do you wish to search by subject or by sender? (type: subject, sender or quit:\n")
+        .lower()
+        .strip()
+    )
 
 
-user_response = (
-    input("Do you wish to search by subject or by sender? (type: subject or sender) ")
-    .lower()
-    .strip()
-)
+
+    if user_response == "sender":
+        try:
+            delete_by_sender()
+
+        except TypeError:
+            print("Try again, be sure that the sender email exists.")
 
 
+    elif user_response == "subject":
+        try:
+            delete_by_subject()
+        except TypeError:
+            print("Try again, be sure that the subject key words exists.")
 
-if user_response == "sender":
-    delete_by_sender()
+    elif user_response == "quit":
+        imap.close()
+        imap.logout()
+
+    else:
+        print("Be sure to type a valid answer")
+        main()
 
 
-elif user_response == "subject":
-    delete_by_subject()
-
-# Else statement to prevent error in caso neither of the other two statemets are true (should i use try and except?)
-else: 
+    imap.expunge()
     imap.close()
+    imap.logout()
 
 
-imap.expunge()
-imap.close()
-imap.logout()
-
+if __name__ == "__main__":
+    main()
 
 # Try to pass an argument as the sender or subject variable to clean code up
-# Show error if there's no key word or sender adress found and ask to input again
+# Implement security measures so that other users can use it without security breaches
