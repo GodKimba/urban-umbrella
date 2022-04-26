@@ -87,3 +87,4 @@ imap.logout()
 
 
 # Try to pass an argument as the sender or subject variable to clean code up
+# Show error if there's no key word or sender adress found and ask to input again
